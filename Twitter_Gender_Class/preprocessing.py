@@ -13,3 +13,7 @@ def readFile(filepath):
                                 usecols=[5,9,10,11,13,18,19,21,22])
     print(dataframe)
     return dataframe
+
+def clean(filepath):
+    dataframe = "data"
+    return dataframe

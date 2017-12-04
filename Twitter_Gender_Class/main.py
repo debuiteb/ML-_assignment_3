@@ -1,15 +1,16 @@
 #Main should just call the other files
 
-import preprocessing
 import support_vector_machine as svm
 import cluster as cluster
 import preprocessing as preprocessing
 import pandas
 
-data = preprocessing.readFile("../gender-classifier-DFE-791531.csv")
+print('starting...')
 
-'''
-filepath = "" #path to csv file
+brian_path = "C:\\Users\\bboyd\\Documents\\college - 4th year\\Machine Learning\\Assignment 3\\twitter-user-gender-classification\\gender.csv"
+#########   TODO INSERT hind and aodan file path      #####
+
+filepath = brian_path #path to csv file
 data_frame = preprocessing.readFile() # pandas dataframe
 
 data_frame = preprocessing.clean(data_frame)
@@ -20,4 +21,4 @@ b = cluster.do()
 print("A: " , a)
 print("B: " , b)
 
-print('starting...')'''
+
