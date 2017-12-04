@@ -8,10 +8,12 @@ Machine Learning Assignment 3
 * and links emoji (or emoticons)
 
 ### Tweet
-* remove stop words
-* tag @users #tags and links,
-* emoji (or emoticons)
-* NOT USING
+* remove 
+  * stop words
+* tag:
+  * @users #tags and links,
+  * emoji (or emoticons)
+* NOT USING:
   * Unordered sub-list.
   * TIMEZONE 
   * LOCATION 
