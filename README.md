@@ -11,10 +11,11 @@ Machine Learning Assignment 3
 * remove 
   * stop words
 * tag:
-  * @users #tags and links,
+  * @users 
+  * #tags
+  * links
   * emoji (or emoticons)
 * NOT USING:
-  * Unordered sub-list.
   * TIMEZONE 
   * LOCATION 
   * TWEETCOORD 
