@@ -11,7 +11,14 @@ Machine Learning Assignment 3
 * remove stop words
 * tag @users #tags and links,
 * emoji (or emoticons)
-NOT USING TIMEZONE OR LOCATION OR TWEETCOORD OR RETWEET COUNT OR PROFILE IMAGE OR CONFIDENCCE THINGS
+* NOT USING
+  * Unordered sub-list.
+  * TIMEZONE 
+  * LOCATION 
+  * TWEETCOORD 
+  * RETWEET COUNT 
+  * PROFILE IMAGE
+  * CONFIDENCCE THINGS
 
 
 # ALGORITHMS TO DO
