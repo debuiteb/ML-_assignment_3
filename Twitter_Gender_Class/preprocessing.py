@@ -1,7 +1,9 @@
 #Clean init dataset add text features remove unused
 import pandas
 import os
-
+from datetime import date
+import datetime
+import re
 
 def read_file(filepath):
     column_names = ["_unit_id","_golden", "_unit_state","_trusted_judgements","_last_judgement_at","gender","gender:confidence",
@@ -21,45 +23,28 @@ def clean(dataframe):
     print('rows: ' , rows)
     print('cols: ', cols)
 
-    #print(dataframe.iterrows)
-
     print(list(dataframe))
-    #dataframe.assign(morning = 0)
-    dataframe['morning'] = 0
-    dataframe['afternoon'] = 0
-    dataframe['evening'] = 0
-    print(list(dataframe))
-    print(dataframe.iloc[9])
-
+    dataframe['account_age'] = 0
 
 
     for row in range(rows):
-        #print(dataframe.iloc[row][8])
-        tweet_date = dataframe.iloc[row][8]
-        tweet_time  = get_tweet_time(tweet_date)
-
-        if(tweet_time<12):
-            dataframe.at[row, 'morning'] = 1
-        elif(tweet_time>=12 and tweet_time<19):
-            dataframe.at[row, 'afternoon'] = 1
-        else:
-            dataframe.at[row, 'evening'] = 1
-
-    print("----------------------------")
-    print(list(dataframe))
-    print(dataframe.iloc[9])
+        creation_date = dataframe.iloc[row][1]
+        account_age = get_account_age(creation_date)
+        dataframe.at[row,'account_age'] = account_age
 
     return dataframe
 
-def get_tweet_time(date):
-    char_array = list(date)
-    on_time = False
-    time = ""
-    for c in char_array:
-        if(c == '' or c==' '):
-            on_time = True
-        if(on_time):
-            if c == ':':
-                return int(time)
-            time = time + c
-    return int(time)
+def get_account_age(date_of_creation):
+
+    [first,second] = re.split(' ', date_of_creation, 1)
+
+    d = datetime.datetime.strptime(first, '%m/%d/%y')
+    day,month,year = d.day,d.month,d.year
+
+
+    #start:21 March 2006
+    l_date = date(int(2017), int(12), int(12))
+    f_date = date(int(year), int(month), int(day))
+    dif = l_date - f_date
+
+    return dif.days

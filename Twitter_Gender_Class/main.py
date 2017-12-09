@@ -15,6 +15,8 @@ data_frame = preprocessing.read_file(file_path) # pandas dataframe
 
 data_frame = preprocessing.clean(data_frame)
 
+print(data_frame)
+
 #a = svm.do()
 #b = cluster.do()
 
