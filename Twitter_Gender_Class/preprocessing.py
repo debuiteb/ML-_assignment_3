@@ -1,24 +1,58 @@
 #Clean init dataset add text features remove unused
-import pandas
+import pandas as pd
+import nltk
+from nltk import word_tokenize
 import os
+
 from datetime import date
 import datetime
 import re
+import numpy as np
 
 def read_file(filepath):
     column_names = ["_unit_id","_golden", "_unit_state","_trusted_judgements","_last_judgement_at","gender","gender:confidence",
                     "profile_yn","profile_yn:confidence","created","description","fav_number","gender_gold","link_color","name",
                     "profile_yn_gold","profileimage","retweet_count","sidebar_color","text","tweet_coord","tweet_count",
                     "tweet_created","tweet_id","tweet_location","user_timezone"]
-    dataframe = pandas.read_csv(filepath,encoding="ISO-8859-1",
+    dataframe = pd.read_csv(filepath,encoding="ISO-8859-1",
                                 sep=',', header=0, names=column_names,
                                 usecols=[5,9,10,11,13,18,19,21,22]) #9 cols initially
     #print(dataframe)
     return dataframe
 
 
+def tokenise(column):
+    samples = column.size
+    tokenised = [0]*samples
+    for i in range(0,samples):
+        if not(pd.isnull(column[i])):
+            tokenised[i] = word_tokenize(column[i])
+        else:
+            tokenised[i] = ['']
+
+    return tokenised
+
+def create_frame(column):
+    frame = np.zeros((len(column),3))
+    for i in range(0, len(column)):
+        if('#' in column[i]):
+            frame[i][0] = 1
+        if('@' in column[i]):
+            frame[i][1] = 1
+        if('http' in column[i]):
+            frame[i][2] = 1
+    return frame
 
 def clean(dataframe):
+
+    descriptions = dataframe.description
+    tweets = dataframe.text
+    desc_tokens = tokenise(descriptions)
+    tweet_tokens = tokenise(tweets)
+
+    desc_cols = create_frame(desc_tokens)
+    tweet_cols = create_frame(tweet_tokens)
+
     [rows,cols] = dataframe.shape
     print('rows: ' , rows)
     print('cols: ', cols)
