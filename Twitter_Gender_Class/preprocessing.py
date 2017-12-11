@@ -35,15 +35,19 @@ def tokenise(column):
 def create_frame(column):
     frame = np.zeros((len(column),3))
     for i in range(0, len(column)):
-        if('#' in column[i]):
+        if('#' in column[i]):   # if #
             frame[i][0] = 1
-        if('@' in column[i]):
+        if('@' in column[i]):   # if @
             frame[i][1] = 1
-        if('http' in column[i]):
+        if('http' in column[i]): #if link
             frame[i][2] = 1
     return frame
 
 def clean(dataframe):
+
+    [rows, cols] = dataframe.shape
+    print('rows: ', rows)
+    print('cols: ', cols)
 
     descriptions = dataframe.description
     tweets = dataframe.text
@@ -53,14 +57,28 @@ def clean(dataframe):
     desc_cols = create_frame(desc_tokens)
     tweet_cols = create_frame(tweet_tokens)
 
-    [rows,cols] = dataframe.shape
-    print('rows: ' , rows)
-    print('cols: ', cols)
+    dataframe['hash_in_bio'] = 0
+    dataframe['at_in_bio'] = 0
+    dataframe['link_in_bio'] = 0
+
+    for row in range(rows):
+        dataframe.at[row,'hash_in bio'] = desc_cols[row][0]
+        dataframe.at[row, 'at_in bio'] = desc_cols[row][1]
+        dataframe.at[row, 'link_in bio'] = desc_cols[row][2]
+
+
+    dataframe['hash_in_tweet'] = 0
+    dataframe['at_in_tweet'] = 0
+    dataframe['link_in_tweet'] = 0
+
+    for row in range(rows):
+        dataframe.at[row,'hash_in_tweet'] = tweet_cols[row][0]
+        dataframe.at[row, 'at_in_tweet'] = tweet_cols[row][1]
+        dataframe.at[row, 'link_in_tweet'] = tweet_cols[row][2]
 
     print(list(dataframe))
+
     dataframe['account_age'] = 0
-
-
     for row in range(rows):
         creation_date = dataframe.iloc[row][1]
         account_age = get_account_age(creation_date)
