@@ -28,5 +28,15 @@ Machine Learning Assignment 3
 ### SVM
 ### Clusters
 
+# Other Notes
+* Number of 'unknown' genders : 1117
+* Number of 'brand' genders : 5942
+* Number of 'male' genders : 6194
+* Number of 'female' genders : 6700
+* Total = 19,953
+* Expected Results : 20,050
+* NANs: 97
+
+
 
 
