@@ -18,6 +18,7 @@ def read_file(filepath):
                                 sep=',', header=0, names=column_names,
                                 usecols=[5,9,10,11,13,18,19,21,22]) #9 cols initially
     #print(dataframe)
+    #dataframe = dataframe.dropna()
     return dataframe
 
 
@@ -43,11 +44,8 @@ def create_frame(column):
             frame[i][2] = 1
     return frame
 
-def clean(dataframe):
-
+def create_tweet_and_bio_columns(dataframe):
     [rows, cols] = dataframe.shape
-    print('rows: ', rows)
-    print('cols: ', cols)
 
     descriptions = dataframe.description
     tweets = dataframe.text
@@ -62,19 +60,50 @@ def clean(dataframe):
     dataframe['link_in_bio'] = 0
 
     for row in range(rows):
-        dataframe.at[row,'hash_in bio'] = desc_cols[row][0]
+        dataframe.at[row, 'hash_in bio'] = desc_cols[row][0]
         dataframe.at[row, 'at_in bio'] = desc_cols[row][1]
         dataframe.at[row, 'link_in bio'] = desc_cols[row][2]
-
 
     dataframe['hash_in_tweet'] = 0
     dataframe['at_in_tweet'] = 0
     dataframe['link_in_tweet'] = 0
 
     for row in range(rows):
-        dataframe.at[row,'hash_in_tweet'] = tweet_cols[row][0]
+        dataframe.at[row, 'hash_in_tweet'] = tweet_cols[row][0]
         dataframe.at[row, 'at_in_tweet'] = tweet_cols[row][1]
         dataframe.at[row, 'link_in_tweet'] = tweet_cols[row][2]
+
+
+
+    return dataframe
+
+
+def strip_nans(dataframe) :
+    rows = dataframe.shape[0]
+    for row in range(rows):
+        if dataframe["gender"][row] == 'nan':
+            print(dataframe["gender"][row])
+            dataframe.drop(dataframe.index[row])
+            #dataframe["gender"][row] = "NaN"
+
+    dataframe = dataframe.dropna()
+    return dataframe
+
+def clean(dataframe):
+
+    [rows, cols] = dataframe.shape
+    print('rows: ', rows)
+    print('cols: ', cols)
+
+    dataframe = create_tweet_and_bio_columns(dataframe)
+
+    count = 0
+    for row in range(rows):
+        if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
+            print(dataframe["gender"][row])
+            count += 1
+
+    print(count)
 
     print(list(dataframe))
 
@@ -83,6 +112,18 @@ def clean(dataframe):
         creation_date = dataframe.iloc[row][1]
         account_age = get_account_age(creation_date)
         dataframe.at[row,'account_age'] = account_age
+
+    #dataframe = strip_nans(dataframe)
+    #dataframe = dataframe.dropna()
+    dataframe = dataframe[dataframe.gender.notnull()]
+    print('------------------------------')
+    count = 0
+    for row in range(rows):
+        #if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
+        if dataframe["gender"][row]=='nan':
+            print(dataframe["gender"][row])
+            count += 1
+    print(count)
 
     return dataframe
 
