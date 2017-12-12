@@ -73,21 +73,23 @@ def create_tweet_and_bio_columns(dataframe):
         dataframe.at[row, 'at_in_tweet'] = tweet_cols[row][1]
         dataframe.at[row, 'link_in_tweet'] = tweet_cols[row][2]
 
-
-
     return dataframe
 
 
-def strip_nans(dataframe) :
+def strip_nans(dataframe):
     rows = dataframe.shape[0]
     for row in range(rows):
-        if dataframe["gender"][row] == 'nan':
+        if dataframe[row].hasnans:
+            print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr ", row)
+        '''if dataframe["gender"][row] == 'nan':
             print(dataframe["gender"][row])
             dataframe.drop(dataframe.index[row])
-            #dataframe["gender"][row] = "NaN"
+            #dataframe["gender"][row] = "NaN" '''
 
     dataframe = dataframe.dropna()
     return dataframe
+
+
 
 def clean(dataframe):
 
@@ -96,6 +98,12 @@ def clean(dataframe):
     print('cols: ', cols)
 
     dataframe = create_tweet_and_bio_columns(dataframe)
+
+
+    '''for col in range(cols):
+        for row in range(rows):
+            if pd.isnull(dataframe.loc[row, col]):
+                print("WE HGA A NANA")'''
 
     count = 0
     for row in range(rows):
@@ -115,7 +123,9 @@ def clean(dataframe):
 
     #dataframe = strip_nans(dataframe)
     #dataframe = dataframe.dropna()
-    dataframe = dataframe[dataframe.gender.notnull()]
+    #dataframe = dataframe[dataframe.gender.notnull()]
+    if dataframe.isnull().values.any():
+        print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
     print('------------------------------')
     count = 0
     for row in range(rows):
