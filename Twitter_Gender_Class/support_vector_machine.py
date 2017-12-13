@@ -24,7 +24,7 @@ def seventyThirty():
 
     data_frame = preprocessing.clean(data_frame) # data now has the correct amount of rows
     Y=data_frame["gender"]
-    X=data_frame["created","description","fav_number", "link_color", "sidebar_color", "text", "tweet_count", "tweet_created", "hash_in_bio", "at_in_bio", "link_in_bio", "hash_in_bio","at_in_bio", "link_in_bio","hash_in_tweet", "at_in_tweet", "link_in_tweet"]
+	X = data_frame[["fav_number", "tweet_count", "hash_in_bio", "at_in_bio", "link_in_bio","hash_in_tweet", "at_in_tweet", "link_in_tweet", "account_age"]]
     i=4
     x_train = X.head(int(set_sizes[i]*0.7))
     x_test = X.tail(int(set_sizes[i]*0.3))
