@@ -8,11 +8,11 @@ Machine Learning Assignment 3
 * and links emoji (or emoticons)
 
 ### Tweet
-* ~~remove  ~~
-  * ~~stop words ~~
+* ~~remove~~
+  * ~~stop words~~
 * tag:
-  * ~~@users ~~
-  * ~~#tags ~~
+  * ~~@users~~
+  * ~~#tags~~
   * ~~links~~
   * ~~emoji (or emoticons)~~
 * NOT USING:
