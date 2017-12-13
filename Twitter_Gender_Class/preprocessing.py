@@ -8,6 +8,9 @@ from datetime import date
 import datetime
 import re
 import numpy as np
+import random
+from random import *
+
 
 def read_file(filepath):
     column_names = ["_unit_id","_golden", "_unit_state","_trusted_judgements","_last_judgement_at","gender","gender:confidence",
@@ -44,6 +47,9 @@ def create_frame(column):
             frame[i][2] = 1
     return frame
 
+
+
+
 def create_tweet_and_bio_columns(dataframe):
     [rows, cols] = dataframe.shape
 
@@ -73,21 +79,44 @@ def create_tweet_and_bio_columns(dataframe):
         dataframe.at[row, 'at_in_tweet'] = tweet_cols[row][1]
         dataframe.at[row, 'link_in_tweet'] = tweet_cols[row][2]
 
-
-
     return dataframe
 
 
-def strip_nans(dataframe) :
+def strip_nans(dataframe):
     rows = dataframe.shape[0]
     for row in range(rows):
-        if dataframe["gender"][row] == 'nan':
+        if dataframe[row].hasnans:
+            print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr ", row)
+        '''if dataframe["gender"][row] == 'nan':
             print(dataframe["gender"][row])
             dataframe.drop(dataframe.index[row])
-            #dataframe["gender"][row] = "NaN"
+            #dataframe["gender"][row] = "NaN" '''
 
     dataframe = dataframe.dropna()
     return dataframe
+
+def change_gender(dataframe):
+    [rows, cols] = dataframe.shape
+    genders=dataframe.gender
+    frame = np.zeros((len(genders),1))
+    for i in range(0, len(genders)):
+        if("male" ==genders[i]):   # if #
+            frame[i][0] = 0
+        elif("female" == genders[i]):   # if @
+            frame[i][0] = 1
+        elif("brand" == genders[i]): #if link
+            frame[i][0] = 2
+        elif("unknown" == genders[i]):
+            frame[i][0] = randint(0,2)
+
+    dataframe['gender']=0
+    for row in range(rows):
+        dataframe.at[row, 'gender'] = frame[row][0]
+
+    return dataframe
+
+
+
 
 def clean(dataframe):
 
@@ -97,15 +126,20 @@ def clean(dataframe):
 
     dataframe = create_tweet_and_bio_columns(dataframe)
 
-    count = 0
-    for row in range(rows):
-        if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
-            print(dataframe["gender"][row])
-            count += 1
+    '''for col in range(cols):
+        for row in range(rows):
+            if pd.isnull(dataframe.loc[row, col]):
+                print("WE HGA A NANA")'''
 
-    print(count)
+    ##count = 0
+    ##for row in range(rows):
+      ##  if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
+        ##    print(dataframe["gender"][row])
+         ##   count += 1
 
-    print(list(dataframe))
+    ##print(count)
+
+#    print(list(dataframe))
 
     dataframe['account_age'] = 0
     for row in range(rows):
@@ -115,9 +149,14 @@ def clean(dataframe):
 
     #dataframe = strip_nans(dataframe)
     #dataframe = dataframe.dropna()
-    dataframe = dataframe[dataframe.gender.notnull()]
+    #dataframe = dataframe[dataframe.gender.notnull()]
+    if dataframe.isnull().values.any():
+        print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
     print('------------------------------')
     count = 0
+
+    dataframe = change_gender(dataframe)
+
 
     return dataframe
 
