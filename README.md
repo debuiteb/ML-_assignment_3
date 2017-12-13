@@ -26,7 +26,7 @@ Machine Learning Assignment 3
 
 # ALGORITHMS TO DO
 ### SVM
-### Clusters
+### K Nearest Nieghbours
 
 # Other Notes
 * Number of 'unknown' genders : 1117
