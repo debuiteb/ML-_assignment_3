@@ -118,12 +118,6 @@ def clean(dataframe):
     dataframe = dataframe[dataframe.gender.notnull()]
     print('------------------------------')
     count = 0
-    for row in range(rows):
-        #if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
-        if dataframe["gender"][row]=='nan':
-            print(dataframe["gender"][row])
-            count += 1
-    print(count)
 
     return dataframe
 
