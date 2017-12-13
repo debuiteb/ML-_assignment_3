@@ -28,7 +28,11 @@ Machine Learning Assignment 3
 ### SVM
 ### K Nearest Nieghbours
 
-# Other Notes
+## Link now:
+### Bio and tweet link colour will now be set as 3 rgb columns
+#### 6 new columns
+
+# Other Notes:
 * Number of 'unknown' genders : 1117
 * Number of 'brand' genders : 5942
 * Number of 'male' genders : 6194
