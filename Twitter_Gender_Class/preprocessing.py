@@ -118,40 +118,27 @@ def change_gender(dataframe):
     return dataframe
 
 
-
-
-def clean(dataframe):
-
+def create_account_age(dataframe):
     [rows, cols] = dataframe.shape
-    print('rows: ', rows)
-    print('cols: ', cols)
-
-    dataframe = create_tweet_and_bio_columns(dataframe)
-
-    '''for col in range(cols):
-        for row in range(rows):
-            if pd.isnull(dataframe.loc[row, col]):
-                print("WE HGA A NANA")'''
-
-    ##count = 0
-    ##for row in range(rows):
-      ##  if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
-        ##    print(dataframe["gender"][row])
-         ##   count += 1
-
-    ##print(count)
-
-#    print(list(dataframe))
-
     dataframe['account_age'] = 0
     for row in range(rows):
         creation_date = dataframe.iloc[row][1]
         account_age = get_account_age(creation_date)
-        dataframe.at[row,'account_age'] = account_age
+        dataframe.at[row, 'account_age'] = account_age
 
-    #dataframe = strip_nans(dataframe)
-    #dataframe = dataframe.dropna()
-    #dataframe = dataframe[dataframe.gender.notnull()]
+    return dataframe
+
+def clean(dataframe):
+
+    [rows, cols] = dataframe.shape
+
+    dataframe = create_tweet_and_bio_columns(dataframe)
+    dataframe = create_account_age(dataframe)
+
+    print(list(dataframe))
+
+
+
     if dataframe.isnull().values.any():
         print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
     print('------------------------------')

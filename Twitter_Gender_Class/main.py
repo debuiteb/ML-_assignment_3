@@ -11,11 +11,11 @@ print('starting...')
 
 
 file_path = ".//gender.csv"
-#data_frame = preprocessing.read_file(file_path) # pandas dataframe
+data_frame = preprocessing.read_file(file_path) # pandas dataframe
 
-#data_frame = preprocessing.clean(data_frame) # data now has the correct amount of rows
-svm.seventyThirty()
-#print(data_frame)
+data_frame = preprocessing.clean(data_frame) # data now has the correct amount of rows
+#svm.seventyThirty()
+print(data_frame)
 
 
 #a = svm.do()
