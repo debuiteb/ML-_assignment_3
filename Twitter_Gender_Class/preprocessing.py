@@ -11,6 +11,8 @@ import numpy as np
 import random
 from random import *
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 
 
 
@@ -89,10 +91,6 @@ def strip_nans(dataframe):
     for row in range(rows):
         if dataframe[row].hasnans:
             print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr ", row)
-        '''if dataframe["gender"][row] == 'nan':
-            print(dataframe["gender"][row])
-            dataframe.drop(dataframe.index[row])
-            #dataframe["gender"][row] = "NaN" '''
 
     dataframe = dataframe.dropna()
     return dataframe
@@ -135,7 +133,7 @@ def clean(dataframe):
     dataframe = create_tweet_and_bio_columns(dataframe)
     dataframe = create_account_age(dataframe)
 
-    print(list(dataframe))
+    #print(list(dataframe))
 
 
 
@@ -160,6 +158,7 @@ def clean(dataframe):
                ]]  = scaler.fit_transform(dataframe[[ 'fav_number',  'tweet_count',
                 'hash_in_bio', 'at_in_bio', 'link_in_bio', 'hash_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age',
                 'r_sidebar_colour', 'g_sidebar_colour','b_sidebar_colour','r_link_colour','g_link_colour','b_link_colour']])
+    #dataframe = feature_select(dataframe)
     return dataframe
 
 def get_account_age(date_of_creation):
@@ -230,3 +229,16 @@ def get_colour_good_and_proper(dataframe):
         dataframe.at[row, 'g_link_colour'] =framesG[row][0]
         dataframe.at[row, 'b_link_colour'] =framesB[row][0]
     return dataframe
+
+def feature_select_custom(X,y,k):
+    #print(X.shape)
+    #print(y.shape)
+
+    #print('type before: ' , type(X))
+    X = SelectKBest(chi2, k = k).fit_transform(X,y)
+    #print('type after: ', type(X))
+
+    #print(X.shape)
+
+    df = pd.DataFrame(X)
+    return df
