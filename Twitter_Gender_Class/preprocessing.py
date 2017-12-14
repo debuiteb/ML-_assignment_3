@@ -230,14 +230,6 @@ def get_colour_good_and_proper(dataframe):
     return dataframe
 
 def feature_select_custom(X,y,k):
-    #print(X.shape)
-    #print(y.shape)
-
-    #print('type before: ' , type(X))
     X = SelectKBest(chi2, k = k).fit_transform(X,y)
-    #print('type after: ', type(X))
-
-    #print(X.shape)
-
     df = pd.DataFrame(X)
     return df
