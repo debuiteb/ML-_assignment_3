@@ -1,7 +1,7 @@
 #Main should just call the other files
 
 import support_vector_machine as svm
-import cluster as cluster
+import knn as cluster
 import preprocessing as preprocessing
 import pandas
 
@@ -14,6 +14,8 @@ file_path = ".//gender.csv"
 data_frame = preprocessing.read_file(file_path) # pandas dataframe
 
 data_frame = preprocessing.clean(data_frame) # data now has the correct amount of rows
+
+data_frame.dropna()
 
 for i in range(2,16):
     svm.svm_run(data_frame,i)
