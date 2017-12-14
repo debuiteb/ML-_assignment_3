@@ -98,6 +98,7 @@ def strip_nans(dataframe):
 def change_gender(dataframe):
     [rows, cols] = dataframe.shape
     genders=dataframe.gender
+    print(len(genders))
     frame = np.zeros((len(genders),1))
     for i in range(0, len(genders)):
         if("male" ==genders[i]):   # if #
@@ -148,6 +149,10 @@ def clean(dataframe):
             count += 1
     print(count)
 
+    #dataframe=dataframe[dataframe.gender != 'unknown']
+    #print(dataframe[93])
+    dataframe.ix[dataframe["gender"] != "unknown"]
+    #print(dataframe)
     dataframe = change_gender(dataframe)
     dataframe = get_colour_good_and_proper(dataframe)
     scaler=MinMaxScaler()
