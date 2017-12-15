@@ -17,12 +17,9 @@ def read():
                     cond = True
                     data.append(header)
                 count = count + 1
-                #print(row)
                 if row[5] == 'male' or row[5] == 'female' or row[5] == 'brand':
                     #add to data
                     data.append(row)
-                    #print("g:",row[5])
             writer.writerows(data)
-        #print("count: " , count)
-        #print(header)
+
     return ".//cleaned_gender.csv"

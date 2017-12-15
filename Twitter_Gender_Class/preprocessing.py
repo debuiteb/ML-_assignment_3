@@ -1,14 +1,11 @@
 #Clean init dataset add text features remove unused
 import pandas as pd
-import nltk
 from nltk import word_tokenize
-import os
 
 from datetime import date
 import datetime
 import re
 import numpy as np
-import random
 from random import *
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SelectKBest
@@ -24,8 +21,7 @@ def read_file(filepath):
     dataframe = pd.read_csv(filepath,encoding="ISO-8859-1",
                                 sep=',', header=0, names=column_names,
                                 usecols=[5,9,10,11,13,18,19,21,22]) #9 cols initially
-    #print(dataframe)
-    #dataframe = dataframe.dropna()
+
     return dataframe
 
 
@@ -86,16 +82,6 @@ def create_tweet_and_bio_columns(dataframe):
     return dataframe
 
 
-def strip_nans(dataframe):
-    rows = dataframe.shape[0]
-   # dataframe = dataframe[dataframe.gender == unknown]
-    for row in range(rows):
-        if dataframe[row].hasnans:
-            print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr ", row)
-
-    dataframe = dataframe.dropna()
-    return dataframe
-
 def change_gender(dataframe):
     [rows, cols] = dataframe.shape
     genders=dataframe.gender
@@ -129,22 +115,11 @@ def create_account_age(dataframe):
     return dataframe
 
 def clean(dataframe):
-
     [rows, cols] = dataframe.shape
 
     dataframe = create_tweet_and_bio_columns(dataframe)
     dataframe = create_account_age(dataframe)
 
-
-    if dataframe.isnull().values.any():
-        print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
-    print('------------------------------')
-    count = 0
-
-    #dataframe=dataframe[dataframe.gender != 'unknown']
-    #print(dataframe[93])
-    #dataframe.ix[dataframe["gender"] != "unknown"]
-    #print(dataframe)
     dataframe = change_gender(dataframe)
     dataframe = get_colour_good_and_proper(dataframe)
     scaler=MinMaxScaler()
@@ -155,19 +130,16 @@ def clean(dataframe):
                ]]  = scaler.fit_transform(dataframe[[ 'fav_number',  'tweet_count',
                 'hash_in_bio', 'at_in_bio', 'link_in_bio', 'hash_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age',
                 'r_sidebar_colour', 'g_sidebar_colour','b_sidebar_colour','r_link_colour','g_link_colour','b_link_colour']])
-    #dataframe = feature_select(dataframe)
+
     return dataframe
 
-def get_account_age(date_of_creation):
-    #'r_sidebar_colour', 'g_sidebar_colour','b_sidebar_colour','r_link_colour','g_link_colour','b_link_colour'
 
+def get_account_age(date_of_creation):
     [first,second] = re.split(' ', date_of_creation, 1)
 
     d = datetime.datetime.strptime(first, '%m/%d/%y')
     day,month,year = d.day,d.month,d.year
 
-
-    #start:21 March 2006
     l_date = date(int(2017), int(12), int(12))
     f_date = date(int(year), int(month), int(day))
     dif = l_date - f_date
@@ -198,7 +170,6 @@ def get_colour_good_and_proper(dataframe):
         RGBs=[0]*3
         RGBs2=[0]*3
         h=sidebar_colors[row].lstrip('#')
-        #print(h)
         if(h!='0'and len(h)==6):
             RGB = tuple(int(h[i:i+2], 16) for i in (0, 2 ,4))
             frameR[row][0]=RGB[0]
@@ -230,5 +201,4 @@ def get_colour_good_and_proper(dataframe):
 def feature_select_custom(X,y,k):
     X = SelectKBest(chi2, k = k).fit_transform(X,y)
     df = pd.DataFrame(X)
-    #print("list", list(df))
     return df

@@ -3,6 +3,7 @@ import preprocessing as preprocessing
 
 from sklearn.model_selection import KFold, GridSearchCV,cross_val_score
 from sklearn import svm
+from sklearn.metrics import classification_report
 
 
 def get_plot_feature_scores(data_frame):
@@ -16,11 +17,10 @@ def get_plot_feature_scores(data_frame):
          'g_link_colour', 'b_link_colour']]
     print("X shape", X.shape)
 
-    score_averages = list()
     score_averages = [0] * 12
     print(score_averages)
     ind = 0
-    for k in range(2,14): ## change back
+    for k in range(2,14):
         X_with_k_features = preprocessing.feature_select_custom(X, Y, k)
         print(X_with_k_features.shape)
 
@@ -36,14 +36,6 @@ def get_plot_feature_scores(data_frame):
         score_averages[ind] = average
         ind = ind + 1
 
-        #for a in range(len(scores)):
-        #    score_averages[a] = score_averages + scores[a]
-
-        #for a in range(len(scores)):
-        #   score_averages[a] = score_averages/10
-
-
-
         print(("------ ------- ---------"))
 
     return score_averages
@@ -54,22 +46,11 @@ def svm_run(data_frame,k):
     set_sizes = [100,500,1000,5000,10000,22000]
 
     Y = data_frame["gender"]
-    #print("LIST: " , list(data_frame))
     X = data_frame[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
 
-    X2 = data_frame[['link_in bio', 'hash_in_tweet', 'at_in_tweet']]
-
     X = preprocessing.feature_select_custom(X,Y,k)
-    #print('list: ' ,list(X))
-
-    i=5
-
-    #print("xshape" ,X.shape)
-    #print("yshape" , Y.shape)
 
     clf = svm.LinearSVC()
-
-    print("aaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhh")
 
     scores = cross_val_score(clf, X, Y, cv=10)
 
@@ -82,8 +63,7 @@ def svm_run(data_frame,k):
 
 
 
-def svm_run5(data_frame,k):
-    from sklearn.metrics import classification_report
+def svm_report(data_frame,k):
     set_sizes = [100,500,1000,5000, 20000]
     Y = data_frame["gender"]
     X = data_frame[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
