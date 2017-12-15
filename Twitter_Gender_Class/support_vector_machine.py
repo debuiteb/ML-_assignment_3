@@ -1,22 +1,9 @@
-import nltk
-from nltk import word_tokenize
+
 import preprocessing as preprocessing
 
-import numpy as np
-import pandas
-import csv
-import itertools
-from sklearn.svm import SVR
-from datetime import datetime
-from dateutil.parser import parse
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics.regression import mean_squared_error,r2_score
 from sklearn.model_selection import KFold, GridSearchCV,cross_val_score
-import matplotlib.pyplot as plt
 from sklearn import svm
-from sklearn import metrics
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
+
 
 def get_plot_feature_scores(data_frame):
     set_sizes = [100, 500, 1000, 5000, 10000, 20050]
@@ -33,7 +20,7 @@ def get_plot_feature_scores(data_frame):
     score_averages = [0] * 12
     print(score_averages)
     ind = 0
-    for k in range(2,5): ## change back
+    for k in range(2,14): ## change back
         X_with_k_features = preprocessing.feature_select_custom(X, Y, k)
         print(X_with_k_features.shape)
 
