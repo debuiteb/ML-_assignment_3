@@ -28,7 +28,7 @@ data_frame.dropna()
 #print(data_frame)
 
 
-
+'''
 score_averages = svm.get_plot_feature_scores(data_frame)
 
 plt.plot(score_averages)
@@ -37,7 +37,16 @@ plt.xlabel("number of features")
 
 
 plt.show()
+'''
 
+score_averages = knn.get_plot_feature_scores(data_frame)
+
+plt.plot(score_averages)
+plt.ylabel("score averages")
+plt.xlabel("number of features")
+
+
+plt.show()
 
 #a = svm.do()
 #b = cluster.do()
