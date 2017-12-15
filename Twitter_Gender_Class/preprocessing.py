@@ -98,6 +98,7 @@ def strip_nans(dataframe):
 def change_gender(dataframe):
     [rows, cols] = dataframe.shape
     genders=dataframe.gender
+    print(len(genders))
     frame = np.zeros((len(genders),1))
     for i in range(0, len(genders)):
         if("male" ==genders[i]):   # if #
@@ -141,13 +142,11 @@ def clean(dataframe):
         print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
     print('------------------------------')
     count = 0
-    for row in range(rows):
-        #if dataframe["gender"][row] != "male" and dataframe["gender"][row] != "female" and dataframe["gender"][row] != "unknown" and dataframe["gender"][row] != "brand":
-        if dataframe["gender"][row]=='nan':
-            print(dataframe["gender"][row])
-            count += 1
-    print(count)
 
+    #dataframe=dataframe[dataframe.gender != 'unknown']
+    #print(dataframe[93])
+    dataframe.ix[dataframe["gender"] != "unknown"]
+    #print(dataframe)
     dataframe = change_gender(dataframe)
     dataframe = get_colour_good_and_proper(dataframe)
     scaler=MinMaxScaler()
@@ -231,15 +230,7 @@ def get_colour_good_and_proper(dataframe):
     return dataframe
 
 def feature_select_custom(X,y,k):
-    #print(X.shape)
-    #print(y.shape)
-
-    #print('type before: ' , type(X))
     X = SelectKBest(chi2, k = k).fit_transform(X,y)
-    #print('type after: ', type(X))
-
-    #print(X.shape)
-
     df = pd.DataFrame(X)
     print("list", list(df))
     return df
