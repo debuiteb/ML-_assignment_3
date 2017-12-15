@@ -3,7 +3,7 @@ from sklearn import preprocessing, neighbors
 from sklearn.model_selection import KFold, cross_val_score
 import pandas
 import preprocessing
-
+import matplotlib.pyplot as plt
 
 
 def knn_run(data_frame, k):
@@ -28,5 +28,10 @@ def knn_run(data_frame, k):
     scores = cross_val_score(clf, X_fold2, Y_fold, cv=10)
     sum_scores = sum(scores)
     num_scores = len(scores)
-    print("average:", sum_scores / num_scores, " -- k:", k)
+    print(scores)
+    plt.plot(scores)
+    plt.ylabel("score")
+    plt.xlabel("fold number")
+    plt.show()
+    #print("average:", sum_scores / num_scores, " -- k:", k)
 
