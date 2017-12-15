@@ -91,17 +91,26 @@ def svm_run(data_frame,k):
     num_scores = len(scores)
     print("average:" , sum_scores/num_scores, " -- k:",k)
 
-
     print(("------ ------- ---------"))
 
-    plt.plot(scores)
-    plt.ylabel("score")
-    plt.xlabel("number of features")
-
-    plt.show()
 
 
+def svm_run5(data_frame,k):
+    from sklearn.metrics import classification_report
+    set_sizes = [100,500,1000,5000, 20000]
+    Y = data_frame["gender"]
+    X = data_frame[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
+    i=4
 
-
-
-
+    X_train = data_frame.head(int(set_sizes[i] * .7))
+    y_train = X_train.gender
+    X_train = X_train[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
+    X_test = data_frame.tail(int(set_sizes[i] * .3))
+    y_test = X_test.gender
+    X_test = X_test[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
+    clf = svm.LinearSVC()
+    y_true=y_test
+    clf.fit(X_train,y_train)
+    y_pred=clf.predict(X_test)
+    target_names = ['man', 'woman', 'brand']
+    print(classification_report(y_true, y_pred, target_names=target_names))

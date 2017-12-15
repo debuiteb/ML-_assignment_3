@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn import preprocessing, neighbors
-from sklearn.model_selection import KFold, cross_val_score
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
 import pandas
 import preprocessing
 import matplotlib.pyplot as plt
@@ -15,17 +16,14 @@ def knn_run(data_frame, k):
          'g_link_colour', 'b_link_colour']]
     X = preprocessing.feature_select_custom(X, Y, k)
     [n,m] = X.shape
-    #TOTRY Neighbours should be n^0.5, where n is the number of samples
-    #for i in range(2, 15):
-    # print("Neighbour number %i"%(i))
+    print(Y.shape)
+
     clf = neighbors.KNeighborsClassifier(n_neighbors=int(n**0.5))
-    Y_fold = Y.head(int(set_size))
-    kf2 = KFold(n_splits=10)
-    kf2.get_n_splits(Y_fold)
-    X_fold2 = X.head(int(set_size))
-    kf = KFold(n_splits=10)
-    kf.get_n_splits(X_fold2)
-    scores = cross_val_score(clf, X_fold2, Y_fold, cv=10)
+    scores = cross_val_score(clf, X, Y, cv=10)
+    pred = cross_val_predict(clf, X, Y, cv=10)
+    acc = accuracy_score(Y, pred)
+    print(acc)
+
     sum_scores = sum(scores)
     num_scores = len(scores)
     print(scores)
