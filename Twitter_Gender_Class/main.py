@@ -29,3 +29,5 @@ plt.ylabel("score averages")
 plt.xlabel("number of features")
 
 plt.show()
+
+knn.knn_report(data_frame)

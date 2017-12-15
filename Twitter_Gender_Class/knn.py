@@ -1,10 +1,10 @@
-import numpy as np
 from sklearn import preprocessing, neighbors
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
-import pandas
 import preprocessing
 import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report
+
 
 
 def knn_run(data_frame, k):
@@ -45,7 +45,6 @@ def get_plot_feature_scores(data_frame):
          'g_link_colour', 'b_link_colour']]
     print("X shape", X.shape)
 
-    score_averages = list()
     score_averages = [0] * 12
     print(score_averages)
     ind = 0
@@ -65,14 +64,23 @@ def get_plot_feature_scores(data_frame):
         score_averages[ind] = average
         ind = ind + 1
 
-        #for a in range(len(scores)):
-        #    score_averages[a] = score_averages + scores[a]
-
-        #for a in range(len(scores)):
-        #   score_averages[a] = score_averages/10
-
-
-
         print(("------ ------- ---------"))
 
     return score_averages
+
+
+def knn_report(data_frame):
+    set_sizes = [100, 500, 1000, 5000, 20000]
+    Y = data_frame["gender"]
+    X = data_frame[
+        ['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet',
+         'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour',
+         'r_link_colour', 'g_link_colour', 'b_link_colour']]
+    i = 4
+
+    clf = neighbors.KNeighborsClassifier(n_neighbors=int(X.shape[0] ** 0.5))
+    y_true = Y
+
+    y_pred = cross_val_predict(clf, X, Y, cv=10)
+    target_names = ['man', 'woman', 'brand']
+    print(classification_report(y_true, y_pred, target_names=target_names))
