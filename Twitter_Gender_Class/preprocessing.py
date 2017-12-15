@@ -232,5 +232,5 @@ def get_colour_good_and_proper(dataframe):
 def feature_select_custom(X,y,k):
     X = SelectKBest(chi2, k = k).fit_transform(X,y)
     df = pd.DataFrame(X)
-    print("list", list(df))
+    #print("list", list(df))
     return df

@@ -17,9 +17,9 @@ data_frame = preprocessing.clean(data_frame) # data now has the correct amount o
 
 data_frame.dropna()
 
-for i in range(2,16):
-    #    svm.svm_run(data_frame,i)
-    knn.knn_run(data_frame,i)
+for i in range(2,15):
+    svm.svm_run(data_frame,i)
+    #knn.knn_run(data_frame,i)
 #print(data_frame)
 
 
