@@ -20,15 +20,16 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
 def svm_run(data_frame,k):
-    set_sizes = [100,500,1000,5000,10000,50000,100000,500000,1000000,5000000,10000000,50000000,100000000]
+    set_sizes = [100,500,1000,5000,10000,22000]
 
     Y = data_frame["gender"]
-    print("LIST: " , list(data_frame))
+    #print("LIST: " , list(data_frame))
     X = data_frame[['fav_number', 'tweet_count', 'hash_in bio', 'at_in bio', 'link_in bio', 'hash_in_tweet', 'at_in_tweet', 'link_in_tweet', 'account_age', 'r_sidebar_colour', 'g_sidebar_colour', 'b_sidebar_colour', 'r_link_colour', 'g_link_colour', 'b_link_colour']]
 
     X = preprocessing.feature_select_custom(X,Y,k)
+    print("list: " ,list(X))
 
-    i=4
+    i=5
 
     #print("xshape" ,X.shape)
     #print("yshape" , Y.shape)

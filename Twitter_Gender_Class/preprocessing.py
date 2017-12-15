@@ -241,4 +241,5 @@ def feature_select_custom(X,y,k):
     #print(X.shape)
 
     df = pd.DataFrame(X)
+    print("list", list(df))
     return df
