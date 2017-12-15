@@ -88,6 +88,7 @@ def create_tweet_and_bio_columns(dataframe):
 
 def strip_nans(dataframe):
     rows = dataframe.shape[0]
+   # dataframe = dataframe[dataframe.gender == unknown]
     for row in range(rows):
         if dataframe[row].hasnans:
             print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr ", row)
@@ -134,9 +135,6 @@ def clean(dataframe):
     dataframe = create_tweet_and_bio_columns(dataframe)
     dataframe = create_account_age(dataframe)
 
-    #print(list(dataframe))
-
-
 
     if dataframe.isnull().values.any():
         print("hereeeeeeeeeeeeeeerrrrrrrrrrrrr")
@@ -145,7 +143,7 @@ def clean(dataframe):
 
     #dataframe=dataframe[dataframe.gender != 'unknown']
     #print(dataframe[93])
-    dataframe.ix[dataframe["gender"] != "unknown"]
+    #dataframe.ix[dataframe["gender"] != "unknown"]
     #print(dataframe)
     dataframe = change_gender(dataframe)
     dataframe = get_colour_good_and_proper(dataframe)
