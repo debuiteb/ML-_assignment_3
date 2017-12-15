@@ -4,6 +4,9 @@ import support_vector_machine as svm
 import knn as knn
 import preprocessing as preprocessing
 import pandas
+import matplotlib.pyplot as plt
+from pylab import *
+
 
 print('starting...')
 
@@ -17,11 +20,19 @@ data_frame = preprocessing.clean(data_frame) # data now has the correct amount o
 
 data_frame.dropna()
 
-for i in range(2,15):
-    svm.svm_run(data_frame,i)
+#for i in range(2,15):
+    #svm.svm_run(data_frame,i)
     #knn.knn_run(data_frame,i)
 #print(data_frame)
 
+score_averages = svm.get_plot_feature_scores(data_frame)
+
+plt.plot(score_averages)
+plt.ylabel("score averages")
+plt.xlabel("number of features")
+
+
+plt.show()
 
 #a = svm.do()
 #b = cluster.do()
