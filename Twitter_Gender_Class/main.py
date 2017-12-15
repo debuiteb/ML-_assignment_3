@@ -5,6 +5,7 @@ import knn as knn
 import preprocessing as preprocessing
 import pandas
 import matplotlib.pyplot as plt
+import CSV_creator as csv_maker
 from pylab import *
 
 
@@ -25,6 +26,10 @@ data_frame.dropna()
     #knn.knn_run(data_frame,i)
 #print(data_frame)
 
+
+csv_maker.read()
+
+'''
 score_averages = svm.get_plot_feature_scores(data_frame)
 
 plt.plot(score_averages)
@@ -33,6 +38,7 @@ plt.xlabel("number of features")
 
 
 plt.show()
+'''
 
 #a = svm.do()
 #b = cluster.do()
